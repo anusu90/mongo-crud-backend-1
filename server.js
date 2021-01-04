@@ -8,7 +8,9 @@ const mongodb = require('mongodb');
 
 app.use(cors());
 app.use(bodyParser.json());
-app.listen(process.env.PORT || 1234)
+app.listen(process.env.PORT || 1234 , function(){
+    console.log("Server started")
+})
 
 
 app.get("/users", async function(req,res){
@@ -73,7 +75,7 @@ app.get("/user/:user_id", async function(req,res){
         await client.connect()
         let userDB = client.db('myFirstDB').collection("user")
         let findAll = await userDB.find().toArray();
-        foundQ = findAll.find(user => user._id = req.params.user_id)
+        foundQ = findAll.find(user => user._id == req.params.user_id)
         res.json(foundQ);
         
     } catch (error) {
@@ -101,7 +103,8 @@ app.put("/user/:user_id", async function(req,res){
         console.log(updateduser);
 
         res.json({
-            "message": "User updated"
+            "message": "User updated",
+            "id": mongodb.ObjectID(req.params.user_id)
         })
         
     } catch (error) {
