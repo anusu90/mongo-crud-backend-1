@@ -8,7 +8,7 @@ const mongodb = require('mongodb');
 
 app.use(cors());
 app.use(bodyParser.json());
-app.listen(1234)
+app.listen(process.env.PORT || 1234)
 
 
 app.get("/users", async function(req,res){
